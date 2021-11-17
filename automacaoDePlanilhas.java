@@ -40,8 +40,8 @@ public class Reembolsos {
         arquivo = todas.listFiles();
 
         if (arquivo.length == 0) {
-            // Ajuste o caminho da pasta que vc está usando localmente no seu computador      
-            JOptionPane.showMessageDialog(null, "Não há planilhas de reembolso na pasta C:/Solicitações de Reembolso. Não haverá atualização da planilha de consolidado de reembolsos.");
+        // Ajuste o caminho da pasta que vc está usando localmente no seu computador      
+        JOptionPane.showMessageDialog(null, "Não há planilhas de reembolso na pasta C:/Solicitações de Reembolso. Não haverá atualização da planilha de consolidado de reembolsos.");
 
         } else {
 
@@ -67,21 +67,22 @@ public class Reembolsos {
             // Grava linha na planilha de consolidado de reembolsos
             
             try {
-                String filePath = pastaConsolidadoReembolso + "/" + "Consolidado de reembolso de despesas.xlsx";
-                File file=new File(filePath);
-                FileInputStream arq=new FileInputStream(file);
-                XSSFWorkbook workbookSaida=new XSSFWorkbook(arq);
-                XSSFSheet sheetSaida=workbookSaida.getSheetAt(0);
+            String filePath = pastaConsolidadoReembolso + "/" + "Consolidado de reembolso de despesas.xlsx";
+            File file=new File(filePath);
+            FileInputStream arq=new FileInputStream(file);
+            XSSFWorkbook workbookSaida=new XSSFWorkbook(arq);
+            XSSFSheet sheetSaida=workbookSaida.getSheetAt(0);
             }
+
             if(linhaSaida==4) {
                // Limpeza das linhas do processamento anterior na planilha de consolidado de reembolsos
                 for(int j = 4; j <= 50; j++){
-                sheetSaida.getRow(j).createCell(1).setCellValue("");
-                sheetSaida.getRow(j).createCell(2).setCellValue("");
+                    sheetSaida.getRow(j).createCell(1).setCellValue("");
+                    sheetSaida.getRow(j).createCell(2).setCellValue("");
                 }
             }
                 // Grava nome do solicitante e total de solicitação de reembolso do mesmo
-                
+             
             sheetSaida.getRow(linhaSaida).createCell(1).setCellValue(nomeSolicitante);  
             NumberFormat formataValor = new DecimalFormat(",###.00");     
             sheetSaida.getRow(linhaSaida).createCell(2).setCellValue(formataValor.format(totalSolicitante)); 
@@ -89,14 +90,14 @@ public class Reembolsos {
             // Gravação de linha de total geral
                 
             if (i==arquivo.length-1) {
-                sheetSaida.getRow(linhaSaida).createCell(1).setCellValue("TOTAL GERAL = ");
-                sheetSaida.getRow(linhaSaida).createCell(2).setCellValue(formataValor.format(totalGeral));
-                // Formatação da literal de TOTAL GERAL à direita
-                final XSSFCellStyle style = workbookSaida.createCellStyle();
-                style.setAlignment(HorizontalAlignment.RIGHT);
-                XSSFRow row = sheetSaida.getRow(linhaSaida);
-                XSSFCell cell = row.getCell((short) 1);
-                cell.setCellStyle(style);
+            sheetSaida.getRow(linhaSaida).createCell(1).setCellValue("TOTAL GERAL = ");
+            sheetSaida.getRow(linhaSaida).createCell(2).setCellValue(formataValor.format(totalGeral));
+            // Formatação da literal de TOTAL GERAL à direita
+            final XSSFCellStyle style = workbookSaida.createCellStyle();
+            style.setAlignment(HorizontalAlignment.RIGHT);
+            XSSFRow row = sheetSaida.getRow(linhaSaida);
+            XSSFCell cell = row.getCell((short) 1);
+            cell.setCellStyle(style);
             }
                 
             FileOutputStream fos=new FileOutputStream(filePath);
